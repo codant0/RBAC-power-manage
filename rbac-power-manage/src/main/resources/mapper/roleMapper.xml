@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.rbacpowermanage.mapper.RoleMapper">
+
+    <resultMap id="roleMap" type="com.boss.rbacpowermanage.entity.po.RolePO">
+        <id property="rId" column="r_id"></id>
+        <result property="rDesc" column="r_desc"></result>
+        <result property="rName" column="r_name"></result>
+        <collection property="permissions" ofType="com.boss.rbacpowermanage.entity.po.PermissionPO">
+            <id property="pId" column="p_id"></id>
+            <result property="pDesc" column="p_desc"></result>
+            <result property="pName" column="p_name"></result>
+            <result property="mId" column="m_id"></result>
+        </collection>
+    </resultMap>
+
+    <resultMap id="permissionsMap" type="com.boss.rbacpowermanage.entity.po.PermissionPO">
+        <id property="pId" column="p_id"></id>
+        <result property="pDesc" column="p_desc"></result>
+        <result property="pName" column="p_name"></result>
+        <result property="mId" column="m_id"></result>
+    </resultMap>
+    
+
+<!--    <select id="findRolePermissions" parameterType="Integer"-->
+<!--            resultMap="roleMap">-->
+<!--        SELECT r.r_name, r.r_desc, p.*-->
+<!--         FROM sys_roles r, sys_permissions p, sys_role_permission rp-->
+<!--         WHERE r.r_id = rp.r_id AND p.p_id = rp.p_id AND r.r_id=#{rId}-->
+<!--    </select>-->
+
+    <select id="findRolePermissions" parameterType="Integer"
+            resultMap="permissionsMap">
+        SELECT r.r_id, p.*
+         FROM sys_permissions p, sys_role_permission rp, sys_roles r
+         WHERE r.r_id = #{rId} AND rp.r_id = r.r_id AND rp.p_id = p.p_id
+    </select>
+</mapper>
