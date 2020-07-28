@@ -31,7 +31,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public boolean deleteUserRole(Integer uId, Integer rId) {
-        Map<String, Object> deleteMap = new HashMap<>();
+        Map<String, Object> deleteMap = new HashMap<>(8);
         deleteMap.put("u_id", uId);
         deleteMap.put("r_id", rId);
         return userRoleMapper.deleteByMap(deleteMap) >= 1;

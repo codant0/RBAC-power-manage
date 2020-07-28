@@ -1,5 +1,6 @@
 package com.boss.rbacpowermanage.service;
 
+import com.boss.rbacpowermanage.entity.dto.UserDTO;
 import com.boss.rbacpowermanage.entity.po.UserPO;
 
 import java.util.List;
@@ -44,19 +45,19 @@ public interface UserService {
      * 查找所有用户
      * @return
      */
-    List<UserPO> findAllUsers();
+    List<UserDTO> findAllUsers();
 
     /**
      * 根据ID查找用户
      * @return
      * @param id
      */
-    UserPO findUserById(Integer id);
+    UserDTO findUserById(Integer id);
 
     /**
      * 根据用户名查找用户
      * @return
      * @param username
      */
-    UserPO findUserByUsername(String username);
+    UserDTO findUserByUsername(String username);
 }

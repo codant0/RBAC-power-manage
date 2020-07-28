@@ -1,5 +1,6 @@
 package com.boss.rbacpowermanage.entity.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -24,9 +25,10 @@ public class RolePO implements Serializable {
 
     private String rDesc;
 
-    private List<PermissionPO> permissions;
-
     private Date rCreateTime;
 
     private String rCreator;
+
+    @TableField(exist = false)
+    private List<PermissionPO> rolePermissions;
 }

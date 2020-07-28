@@ -35,10 +35,11 @@ public class UserDaoTest {
 
 
     @Test
-    public void SearchUsernameAndPassword() {
+    public void searchUsernameAndPassword() {
 
         Integer tag = userMapper.SearchUsernameAndPassword("lily", "123456");
         logger.info(tag);
 
     }
+
 }

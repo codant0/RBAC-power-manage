@@ -2,6 +2,9 @@ package com.boss.rbacpowermanage.entity.dto;
 
 import lombok.Data;
 
+import javax.management.relation.Role;
+import java.util.List;
+
 /**
  * @Author 黄杰峰
  * @Date 2020/7/27 0027 15:56

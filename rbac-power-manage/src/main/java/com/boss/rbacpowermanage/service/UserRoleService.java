@@ -34,4 +34,6 @@ public interface UserRoleService {
      * @return
      */
     List<Integer> findUserRoleIds(Integer uId);
+
+
 }

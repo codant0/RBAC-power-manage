@@ -1,12 +1,15 @@
 package com.boss.rbacpowermanage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.boss.rbacpowermanage.entity.dto.UserDTO;
 import com.boss.rbacpowermanage.entity.po.UserPO;
 import com.boss.rbacpowermanage.mapper.UserMapper;
 import com.boss.rbacpowermanage.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,17 +48,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserPO> findAllUsers() {
-        return userMapper.selectList(null);
+    public List<UserDTO> findAllUsers() {
+        List<UserDTO> userDTOList = new ArrayList<>();
+        List<UserPO> userPOList = userMapper.selectList(null);
+        for (UserPO user : userPOList) {
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(user, userDTO);
+            userDTOList.add(userDTO);
+        }
+        return userDTOList;
     }
 
     @Override
-    public UserPO findUserById(Integer id) {
-        return userMapper.selectById(id);
+    public UserDTO findUserById(Integer id) {
+        UserPO userPO = userMapper.selectById(id);
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(userPO, userDTO);
+        return userDTO;
     }
 
     @Override
-    public UserPO findUserByUsername(String username) {
-        return userMapper.selectOne(new QueryWrapper<UserPO>().eq("u_name", username));
+    public UserDTO findUserByUsername(String username) {
+        UserDTO userDTO = new UserDTO();
+        UserPO userPO = userMapper.selectOne(new QueryWrapper<UserPO>().eq("u_name", username));
+        BeanUtils.copyProperties(userPO, userDTO);
+        return userDTO;
     }
 }

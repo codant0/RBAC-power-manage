@@ -1,5 +1,6 @@
 package com.boss.rbacpowermanage.service;
 
+import com.boss.rbacpowermanage.entity.dto.RoleDTO;
 import com.boss.rbacpowermanage.entity.po.RolePO;
 
 import java.util.List;
@@ -37,12 +38,12 @@ public interface RoleService {
      * 查找所有角色
      * @return
      */
-    List<RolePO> findAllRoles();
+    List<RoleDTO> findAllRoles();
 
     /**
      * 根据角色ID查找角色
      * @return
      * @param rId
      */
-    RolePO findRoleById(Integer rId);
+    RoleDTO findRoleById(Integer rId);
 }
