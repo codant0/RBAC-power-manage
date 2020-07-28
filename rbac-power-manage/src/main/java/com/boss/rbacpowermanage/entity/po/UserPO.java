@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  * @Author 黄杰峰
  * @Date 2020/7/27 0027 13:58
@@ -11,7 +14,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_users")
-public class UserPO {
+public class UserPO implements Serializable {
 
     @TableId("u_id")
     private Integer uId;
@@ -25,4 +28,6 @@ public class UserPO {
     private String uSex;
 
     private String uEmail;
+
+    private Date uCreateTime;
 }

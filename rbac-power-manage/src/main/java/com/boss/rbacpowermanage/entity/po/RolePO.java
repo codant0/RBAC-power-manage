@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
  */
 @Data
 @TableName("sys_roles")
-public class RolePO {
+public class RolePO implements Serializable {
 
     @TableId("r_id")
     private Integer rId;
@@ -23,4 +25,8 @@ public class RolePO {
     private String rDesc;
 
     private List<PermissionPO> permissions;
+
+    private Date rCreateTime;
+
+    private String rCreator;
 }

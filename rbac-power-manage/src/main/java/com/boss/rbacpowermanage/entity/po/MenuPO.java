@@ -3,6 +3,9 @@ package com.boss.rbacpowermanage.entity.po;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  * @Author 黄杰峰
  * @Date 2020/7/27 0027 14:15
@@ -10,7 +13,7 @@ import lombok.Data;
  */
 @TableName("sys_menu")
 @Data
-public class MenuPO {
+public class MenuPO implements Serializable {
 
     private int mId;
 
@@ -21,4 +24,6 @@ public class MenuPO {
     private int mOrder;
 
     private String mStatus;
+    
+    private Date mCreateTime;
 }
