@@ -2,6 +2,7 @@ package com.boss.rbacpowermanage.service;
 
 import com.boss.rbacpowermanage.entity.po.RolePO;
 import com.boss.rbacpowermanage.entity.po.UserPO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

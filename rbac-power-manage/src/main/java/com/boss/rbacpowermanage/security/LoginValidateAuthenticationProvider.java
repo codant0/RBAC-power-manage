@@ -1,17 +1,25 @@
 package com.boss.rbacpowermanage.security;
 
 import com.boss.rbacpowermanage.entity.domain.UserDO;
+import com.boss.rbacpowermanage.entity.dto.UserDTO;
+import com.boss.rbacpowermanage.service.RolePermissionService;
+import com.boss.rbacpowermanage.service.UserRoleService;
 import com.boss.rbacpowermanage.service.UserService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,11 +29,22 @@ import java.util.Set;
 @Component
 public class LoginValidateAuthenticationProvider implements AuthenticationProvider {
 
-    @Resource
-    private UserService userService;
+    private final UserService userService;
 
-    @Resource
+    private final UserRoleService userRoleService;
+
+    private final RolePermissionService rolePermissionService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public LoginValidateAuthenticationProvider(UserService userService,
+                                               UserRoleService userRoleService,
+                                               RolePermissionService rolePermissionService) {
+        this.userService = userService;
+        this.userRoleService = userRoleService;
+        this.rolePermissionService = rolePermissionService;
+    }
 
 
     @Override
@@ -35,9 +54,9 @@ public class LoginValidateAuthenticationProvider implements AuthenticationProvid
         String rawPassword = (String) authentication.getCredentials();
 
         //查询用户是否存在
-        UserDO user = (UserDO) userService.loadUserByUsername(username);
+        UserDO user = (UserDO)userService.loadUserByUsername(username);
 
-        if (user.isEnabled()) {
+        if (!user.isEnabled()) {
             throw new DisabledException("该账户已被禁用，请联系管理员");
 
         } else if (user.isAccountNonLocked()) {
@@ -57,12 +76,22 @@ public class LoginValidateAuthenticationProvider implements AuthenticationProvid
 
         //设置权限信息
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        for (Resource resource : user.getRole().getResources()) {
-            //资源key作为权限标识
-            grantedAuthorities.add(new SimpleGrantedAuthority(resource.getResourceKey()));
-            user.setAuthorities(grantedAuthorities);
+        List<Integer> userRoleIds = userRoleService.findUserRoleIds(user.getUId());
+        Set<Integer> userPermissionIds = new HashSet<>();
+        Set<Integer> userMenuIds = new HashSet<>();
+
+        for (Integer roleId : userRoleIds) {
+            userPermissionIds.addAll(rolePermissionService.findRolePermissionIds(roleId));
         }
 
+        // 此处一个权限对应一个菜单资源，后期需要改正
+        userMenuIds = userPermissionIds;
+
+        for (Integer menuId : userMenuIds) {
+            //资源key作为权限标识
+            grantedAuthorities.add(new SimpleGrantedAuthority(menuId.toString()));
+            user.setAuthorities(grantedAuthorities);
+        }
 
         return new UsernamePasswordAuthenticationToken(user, rawPassword, user.getAuthorities());
     }

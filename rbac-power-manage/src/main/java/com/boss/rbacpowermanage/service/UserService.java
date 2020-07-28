@@ -1,7 +1,10 @@
 package com.boss.rbacpowermanage.service;
 
+import com.boss.rbacpowermanage.entity.domain.UserDO;
 import com.boss.rbacpowermanage.entity.dto.UserDTO;
 import com.boss.rbacpowermanage.entity.po.UserPO;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
@@ -10,7 +13,7 @@ import java.util.List;
  * @Date 2020/7/27 0027 15:58
  * @Description
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     /**
      * 用户登录验证
@@ -59,5 +62,7 @@ public interface UserService {
      * @return
      * @param username
      */
-    UserDTO findUserByUsername(String username);
+    UserDTO findUserDTOByUsername(String username);
+
+
 }

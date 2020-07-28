@@ -1,12 +1,16 @@
 package com.boss.rbacpowermanage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.boss.rbacpowermanage.entity.domain.UserDO;
 import com.boss.rbacpowermanage.entity.dto.UserDTO;
 import com.boss.rbacpowermanage.entity.po.UserPO;
 import com.boss.rbacpowermanage.mapper.UserMapper;
 import com.boss.rbacpowermanage.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -68,10 +72,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findUserByUsername(String username) {
-        UserDTO userDTO = new UserDTO();
+    public UserDTO findUserDTOByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserDO userDO = new UserDO();
         UserPO userPO = userMapper.selectOne(new QueryWrapper<UserPO>().eq("u_name", username));
-        BeanUtils.copyProperties(userPO, userDTO);
-        return userDTO;
+        BeanUtils.copyProperties(userPO, userDO);
+        if (userDO == null) {
+            throw new UsernameNotFoundException("不存在该用户!");
+        }
+        return userDO;
     }
 }

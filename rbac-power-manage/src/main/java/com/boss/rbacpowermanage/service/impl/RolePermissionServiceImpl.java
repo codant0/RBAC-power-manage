@@ -7,6 +7,7 @@ import com.boss.rbacpowermanage.mapper.RolePermissionMapper;
 import com.boss.rbacpowermanage.mapper.UserMapper;
 import com.boss.rbacpowermanage.service.RolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @Date 2020/7/27 0027 19:42
  * @Description
  */
+@Service
 public class RolePermissionServiceImpl implements RolePermissionService {
 
     private final RoleMapper roleMapper;

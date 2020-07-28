@@ -24,4 +24,6 @@ public class UserDTO {
     private String uSex;
 
     private String uEmail;
+
+    private List<RoleDTO> roleDTOList;
 }

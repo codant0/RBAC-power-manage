@@ -1,11 +1,14 @@
 package com.boss.rbacpowermanage.service.impl;
 
+import com.boss.rbacpowermanage.entity.po.RolePO;
 import com.boss.rbacpowermanage.entity.po.UserPO;
 import com.boss.rbacpowermanage.entity.po.UserRolePO;
 import com.boss.rbacpowermanage.mapper.UserRoleMapper;
 import com.boss.rbacpowermanage.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +18,7 @@ import java.util.Map;
  * @Date 2020/7/27 0027 19:29
  * @Description
  */
+@Service
 public class UserRoleServiceImpl implements UserRoleService {
 
     private final UserRoleMapper userRoleMapper;
@@ -39,6 +43,11 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public List<Integer> findUserRoleIds(Integer uId) {
-        return null;
+        List<Integer> roleIds = new ArrayList<>();
+        List<RolePO> userRoles = userRoleMapper.findUserRoles(uId);
+        for (RolePO role : userRoles) {
+            roleIds.add(role.getRId());
+        }
+        return roleIds;
     }
 }
