@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author 黄杰峰
@@ -64,5 +65,11 @@ public interface UserService extends UserDetailsService {
      */
     UserDTO findUserDTOByUsername(String username);
 
+    /**
+     * 根据用户id查看用户可视的资源
+     * @param id
+     * @return
+     */
+    Set<Integer> findUserMenusByUId(Integer id);
 
 }

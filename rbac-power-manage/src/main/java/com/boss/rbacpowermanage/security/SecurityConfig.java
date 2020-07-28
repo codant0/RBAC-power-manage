@@ -2,6 +2,7 @@ package com.boss.rbacpowermanage.security;
 
 import com.boss.rbacpowermanage.security.handler.LoginFailureHandler;
 import com.boss.rbacpowermanage.security.handler.LoginSuccessHandler;
+import com.boss.rbacpowermanage.security.handler.MyAuthenticationSuccessHandler;
 import com.boss.rbacpowermanage.security.handler.PerAccessDeniedHandler;
 import com.boss.rbacpowermanage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,13 +63,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     private final PerAccessDeniedHandler perAccessDeniedHandler;
 
-    public SecurityConfig(DataSource dataSource, UserService userService, LoginValidateAuthenticationProvider loginValidateAuthenticationProvider, LoginSuccessHandler loginSuccessHandler, LoginFailureHandler loginFailureHandler, PerAccessDeniedHandler perAccessDeniedHandler) {
+    private final MyAuthenticationSuccessHandler authenticationSuccessHandler;
+
+    /**
+     * BCrypt加密方式
+     * @return
+     */
+    private final PasswordEncoder passwordEncoder;
+
+    public SecurityConfig(DataSource dataSource,
+                          UserService userService,
+                          LoginValidateAuthenticationProvider loginValidateAuthenticationProvider,
+                          LoginSuccessHandler loginSuccessHandler,
+                          LoginFailureHandler loginFailureHandler,
+                          PerAccessDeniedHandler perAccessDeniedHandler,
+                          PasswordEncoder passwordEncoder,
+                          MyAuthenticationSuccessHandler authenticationSuccessHandler) {
         this.dataSource = dataSource;
         this.userService = userService;
         this.loginValidateAuthenticationProvider = loginValidateAuthenticationProvider;
         this.loginSuccessHandler = loginSuccessHandler;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.loginFailureHandler = loginFailureHandler;
         this.perAccessDeniedHandler = perAccessDeniedHandler;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -95,7 +113,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //成功登录跳转
                 .defaultSuccessUrl("/index")
                 //成功登录处理器
-                .successHandler(loginSuccessHandler)
+                .successHandler(authenticationSuccessHandler)
                 //失败登录处理器
                 .failureHandler(loginFailureHandler)
                 .permitAll()//登录成功后有权限访问所有页面
@@ -125,14 +143,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    /**
-     * BCrypt加密方式
-     * @return
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
     /**
      * 记住我功能，持久化的token服务

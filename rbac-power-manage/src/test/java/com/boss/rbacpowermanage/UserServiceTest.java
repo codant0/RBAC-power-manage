@@ -8,9 +8,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author 黄杰峰
@@ -39,6 +41,20 @@ public class UserServiceTest {
 
         for (UserPO user : userPOS) {
             System.out.println(user);
+        }
+    }
+
+    @Test
+    public void loadUserByUsernameTest() {
+        UserDetails xiaoming = userService.loadUserByUsername("xiaoming");
+        System.out.println(xiaoming);
+    }
+
+    @Test
+    public void findUserMenuIds() {
+        Set<Integer> userMenusByUId = userService.findUserMenusByUId(2);
+        for (Integer id : userMenusByUId) {
+            System.out.println(id);
         }
     }
 }

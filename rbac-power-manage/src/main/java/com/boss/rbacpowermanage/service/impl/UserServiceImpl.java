@@ -5,16 +5,22 @@ import com.boss.rbacpowermanage.entity.domain.UserDO;
 import com.boss.rbacpowermanage.entity.dto.UserDTO;
 import com.boss.rbacpowermanage.entity.po.UserPO;
 import com.boss.rbacpowermanage.mapper.UserMapper;
+import com.boss.rbacpowermanage.service.RolePermissionService;
+import com.boss.rbacpowermanage.service.UserRoleService;
 import com.boss.rbacpowermanage.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author 黄杰峰
@@ -26,9 +32,21 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
+    private final PasswordEncoder passwordEncoder;
+
+    private final UserRoleService userRoleService;
+
+    private final RolePermissionService rolePermissionService;
+
     @Autowired
-    UserServiceImpl(UserMapper userMapper) {
+    UserServiceImpl(UserMapper userMapper,
+                    PasswordEncoder passwordEncoder,
+                    UserRoleService userRoleService,
+                    RolePermissionService rolePermissionService) {
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
+        this.userRoleService = userRoleService;
+        this.rolePermissionService = rolePermissionService;
     }
 
     @Override
@@ -77,6 +95,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Set<Integer> findUserMenusByUId(Integer id) {
+        Set<Integer> userPermissions = new HashSet<>();
+        List<Integer> userRoleIds = userRoleService.findUserRoleIds(id);
+        for (Integer userRoleId : userRoleIds) {
+            List<Integer> rolePermissionIds = rolePermissionService.findRolePermissionIds(userRoleId);
+            userPermissions.addAll(rolePermissionIds);
+        }
+        Set<Integer> userMenuIds = userPermissions;
+        return userMenuIds;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDO userDO = new UserDO();
         UserPO userPO = userMapper.selectOne(new QueryWrapper<UserPO>().eq("u_name", username));
@@ -84,6 +114,10 @@ public class UserServiceImpl implements UserService {
         if (userDO == null) {
             throw new UsernameNotFoundException("不存在该用户!");
         }
+        // 密码加密
+        userDO.setUPassword(this.passwordEncoder.encode(userDO.getPassword()));
+        userDO.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
         return userDO;
     }
+
 }

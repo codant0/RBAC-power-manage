@@ -78,7 +78,7 @@ public class LoginValidateAuthenticationProvider implements AuthenticationProvid
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         List<Integer> userRoleIds = userRoleService.findUserRoleIds(user.getUId());
         Set<Integer> userPermissionIds = new HashSet<>();
-        Set<Integer> userMenuIds = new HashSet<>();
+        Set<Integer> userMenuIds;
 
         for (Integer roleId : userRoleIds) {
             userPermissionIds.addAll(rolePermissionService.findRolePermissionIds(roleId));

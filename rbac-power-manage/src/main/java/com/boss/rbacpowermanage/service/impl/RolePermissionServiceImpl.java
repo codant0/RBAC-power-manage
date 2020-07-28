@@ -24,7 +24,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
     private final RoleMapper roleMapper;
     private final UserMapper userMapper;
-    RolePermissionMapper rolePermissionMapper;
+    private final RolePermissionMapper rolePermissionMapper;
 
     @Autowired
     RolePermissionServiceImpl(RoleMapper roleMapper,
