@@ -4,4 +4,5 @@ CREATE TABLE sys_menus(
     m_desc VARCHAR(20) NULL COMMENT "菜单描述",
     m_order INT(3) NOT NULL COMMENT "菜单顺序",
     m_status VARCHAR(10) NULL COMMENT "菜单状态"
+    m_create_time DATETIME COMMENT "创建时间"
 );
