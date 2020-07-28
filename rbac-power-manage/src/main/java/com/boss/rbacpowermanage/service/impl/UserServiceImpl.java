@@ -114,6 +114,7 @@ public class UserServiceImpl implements UserService {
         if (userDO == null) {
             throw new UsernameNotFoundException("不存在该用户!");
         }
+
         // 密码加密
         userDO.setUPassword(this.passwordEncoder.encode(userDO.getPassword()));
         userDO.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
