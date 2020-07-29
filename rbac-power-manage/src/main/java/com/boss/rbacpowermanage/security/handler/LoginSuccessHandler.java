@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @Author 黄杰峰
+ * @Date 2020/7/28 0028 16:56
+ * @Description 授权成功处理器
+ */
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 

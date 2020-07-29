@@ -5,7 +5,6 @@ import com.boss.rbacpowermanage.security.handler.LoginSuccessHandler;
 import com.boss.rbacpowermanage.security.handler.MyAuthenticationSuccessHandler;
 import com.boss.rbacpowermanage.security.handler.PerAccessDeniedHandler;
 import com.boss.rbacpowermanage.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,19 +12,15 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 /**
- * @Author OZY
- * @Date 2019/08/08 13:59
- * @Description
- * @Version V1.0
+ * @Author 黄杰峰
+ * @Description Spring Security配置
  **/
 
 @Configuration
