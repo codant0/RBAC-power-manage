@@ -32,4 +32,12 @@ public interface RolePermissionService {
      */
     List<Integer> findRolePermissionIds(Integer roleId);
 
+    /**
+     * 判断角色是否包含该权限
+     * @param roleId
+     * @param permissionId
+     * @return
+     */
+    boolean hasPermission(Integer roleId, Integer permissionId);
+
 }

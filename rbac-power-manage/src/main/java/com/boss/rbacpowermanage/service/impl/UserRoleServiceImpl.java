@@ -1,5 +1,6 @@
 package com.boss.rbacpowermanage.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.boss.rbacpowermanage.entity.po.RolePO;
 import com.boss.rbacpowermanage.entity.po.UserPO;
 import com.boss.rbacpowermanage.entity.po.UserRolePO;
@@ -49,5 +50,12 @@ public class UserRoleServiceImpl implements UserRoleService {
             roleIds.add(role.getRId());
         }
         return roleIds;
+    }
+
+    @Override
+    public boolean hasRole(Integer uId, Integer rId) {
+        UserRolePO userRole = new UserRolePO(uId, rId);
+        UserRolePO userRolePO = userRoleMapper.selectOne(new QueryWrapper<>(userRole));
+        return userRolePO != null;
     }
 }

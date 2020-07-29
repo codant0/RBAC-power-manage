@@ -1,5 +1,6 @@
 package com.boss.rbacpowermanage.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.boss.rbacpowermanage.entity.po.PermissionPO;
 import com.boss.rbacpowermanage.entity.po.RolePermissionPO;
 import com.boss.rbacpowermanage.mapper.RoleMapper;
@@ -56,5 +57,12 @@ public class RolePermissionServiceImpl implements RolePermissionService {
             permissionIds.add(permission.getPId());
         }
         return permissionIds;
+    }
+
+    @Override
+    public boolean hasPermission(Integer roleId, Integer permissionId) {
+
+        RolePermissionPO rolePermissionPO = new RolePermissionPO(roleId, permissionId);
+        return rolePermissionMapper.selectOne(new QueryWrapper<>(rolePermissionPO)) != null;
     }
 }

@@ -87,7 +87,7 @@ public class LoginValidateAuthenticationProvider implements AuthenticationProvid
 
         for (Integer menuId : userMenuIds) {
             //资源key作为权限标识
-            grantedAuthorities.add(new SimpleGrantedAuthority(menuId.toString()));
+            grantedAuthorities.add(new SimpleGrantedAuthority("menu" + menuId.toString()));
             user.setAuthorities(grantedAuthorities);
         }
 

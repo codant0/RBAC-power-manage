@@ -1,15 +1,14 @@
 package com.boss.rbacpowermanage.controller;
 
 import com.boss.rbacpowermanage.entity.domain.UserDO;
+import com.boss.rbacpowermanage.service.UserRoleService;
 import com.boss.rbacpowermanage.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Set;
 
 /**
  * @Author 黄杰峰
@@ -22,8 +21,12 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    private final UserRoleService userRoleService;
+
+    public UserController(UserService userService, UserRoleService userRoleService) {
         this.userService = userService;
+        this.userRoleService = userRoleService;
     }
 
     @GetMapping("/login")
@@ -37,6 +40,33 @@ public class UserController {
         UserDO user = (UserDO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         mv.setViewName("index");
         mv.addObject("user", user);
+        return mv;
+    }
+
+    @PostMapping("/addRole")
+    public ModelAndView addUserRole(@RequestParam int userId, @RequestParam int roleId) {
+
+        ModelAndView mv = new ModelAndView();
+
+        if (userRoleService.hasRole(userId, roleId)) {
+            mv.addObject("msg", "已拥有该角色，添加失败");
+        } else {
+            userRoleService.addUserRole(userId, roleId);
+            mv.addObject("msg", "添加成功");
+        }
+        return mv;
+    }
+
+    public ModelAndView deleteUserRole(@RequestParam int userId, @RequestParam int roleId) {
+
+        ModelAndView mv = new ModelAndView();
+        // 若该用户包含该角色，成功删除，否则不删除
+        if (userRoleService.hasRole(userId, roleId)) {
+            userRoleService.deleteUserRole(userId, roleId);
+            mv.addObject("msg", "删除成功");
+        }
+        mv.addObject("msg", "该用户无该角色，删除失败");
+        mv.setViewName("index");
         return mv;
     }
 

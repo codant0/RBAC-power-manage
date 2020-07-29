@@ -36,5 +36,11 @@ public interface UserRoleService {
      */
     List<Integer> findUserRoleIds(Integer uId);
 
-
+    /**
+     * 判断用户是否包含某角色
+     * @param uId
+     * @param rId
+     * @return
+     */
+    boolean hasRole(Integer uId, Integer rId);
 }

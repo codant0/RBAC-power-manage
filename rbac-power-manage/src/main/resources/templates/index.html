@@ -14,15 +14,15 @@ index页<br/><br/>
     <button id="menu1Btn" type="button" onclick="sendAjax('/menu1')">菜单1</button>
 </span>
 
-<span sec:authorize="hasAuthority('3')">
-    <button id="menu2Btn" type="button" onclick="sendAjax('/menu3')">菜单3</button>
+<span sec:authorize="hasAuthority('menu2')">
+    <button id="menu2Btn" type="button" onclick="sendAjax('/menu2')">菜单2</button>
 </span>
 
-<span sec:authorize="hasAuthority('4')">
-    <button id="menu3Btn" type="button" onclick="sendAjax('/menu4')">菜单4</button>
+<span sec:authorize="hasAuthority('menu3')">
+    <button id="menu3Btn" type="button" onclick="sendAjax('/menu3')">菜单3</button>
 </span>
 
-<span sec:authorize="hasRole('admin')">
+<span sec:authorize="hasAuthority('menu4')">
     <button id="menu4Btn" type="button" onclick="sendAjax('/menu4')">菜单4</button>
 </span>
 
@@ -30,11 +30,10 @@ index页<br/><br/>
     <button id="adminBtn" type="button" onclick="sendAjax('/admin')">admin</button>
 </span>
 
-<span sec:authorize="!hasAuthority('admin')">
-    <button id="noAdminBtn" type="button" onclick="sendAjax('/admin')">no admin</button> <br/>
-    Hello <h3 th:text="${user.authorities}"></h3><br/>
-    Hello <h3 th:text="${user.uName}"></h3><br/>
-    Hello <h3 th:text="${user.uPassword}"></h3><br/>
+<span>
+    <h3 th:text="${user.authorities}"></h3><br/>
+    <h3 th:text="${user.uName}"></h3><br/>
+    <h3 th:text="${user.uPassword}"></h3><br/>
 </span>
 
 <script type="text/javascript">
