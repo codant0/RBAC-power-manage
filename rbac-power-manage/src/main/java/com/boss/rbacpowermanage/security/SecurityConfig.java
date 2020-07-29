@@ -2,7 +2,6 @@ package com.boss.rbacpowermanage.security;
 
 import com.boss.rbacpowermanage.security.handler.LoginFailureHandler;
 import com.boss.rbacpowermanage.security.handler.LoginSuccessHandler;
-import com.boss.rbacpowermanage.security.handler.MyAuthenticationSuccessHandler;
 import com.boss.rbacpowermanage.security.handler.PerAccessDeniedHandler;
 import com.boss.rbacpowermanage.service.UserService;
 import org.springframework.context.annotation.Bean;

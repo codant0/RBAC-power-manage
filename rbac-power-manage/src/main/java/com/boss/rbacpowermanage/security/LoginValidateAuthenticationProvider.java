@@ -1,18 +1,14 @@
 package com.boss.rbacpowermanage.security;
 
 import com.boss.rbacpowermanage.entity.domain.UserDO;
-import com.boss.rbacpowermanage.entity.dto.UserDTO;
 import com.boss.rbacpowermanage.service.RolePermissionService;
 import com.boss.rbacpowermanage.service.UserRoleService;
 import com.boss.rbacpowermanage.service.UserService;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
