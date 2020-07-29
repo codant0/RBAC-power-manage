@@ -123,9 +123,10 @@
 
 - [ ] 结合Nacos、Gateway
 
-- [ ] 理清VO、DTO、DO、PO划分，修改Object的使用
+- [x] 理清VO、DTO、DO、PO划分，修改Object的使用
 
 - [ ] 添加表字段使其完善
 
 - [ ] 了解乐观锁
 - [ ] 考虑更高层次的RBAC结构
+- [x] 前后端分离

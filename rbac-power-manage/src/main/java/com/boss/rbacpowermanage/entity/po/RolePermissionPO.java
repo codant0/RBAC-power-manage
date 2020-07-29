@@ -1,5 +1,6 @@
 package com.boss.rbacpowermanage.entity.po;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @Description
  */
 @Data
+@TableName("sys_role_permission")
 public class RolePermissionPO {
     private Integer rId;
 

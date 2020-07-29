@@ -104,12 +104,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 //所有请求都需要认证
-//                .anyRequest().authenticated()
+                .anyRequest().authenticated()
             .and()
                 //登录表单
                 .formLogin()
                 //登录页面url
-                .loginPage("/login")
+                .loginPage("/login.html")
                 //登录验证url
                 .loginProcessingUrl("/login")
                 //成功登录跳转
