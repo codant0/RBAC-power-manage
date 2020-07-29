@@ -1,6 +1,10 @@
 package com.boss.rbacpowermanage.entity.vo;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * @Author 黄杰峰
@@ -8,15 +12,21 @@ import lombok.Data;
  * @Description
  */
 @Data
-public class UserVO {
+public class UserVO implements Serializable {
 
     private Integer uId;
 
     private String uName;
+
+    private String uPassword;
 
     private String uPhone;
 
     private String uSex;
 
     private String uEmail;
+
+    private Collection<? extends GrantedAuthority> authorities;
+
+    private String msg;
 }

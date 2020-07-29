@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import javax.sql.DataSource;
 
 /**
+ * @author Ant
  * @Author 黄杰峰
  * @Description Spring Security配置
  **/
@@ -98,11 +99,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //基础设置
-        http/*.httpBasic()//配置HTTP基本身份验证
-            .and()*/
+        http
+                .httpBasic()
+            .and()
                 .authorizeRequests()
                 //所有请求都需要认证
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
             .and()
                 //登录表单
                 .formLogin()
