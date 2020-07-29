@@ -16,8 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,21 +33,21 @@ public class LoginValidateAuthenticationProvider implements AuthenticationProvid
 
     private final RolePermissionService rolePermissionService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public LoginValidateAuthenticationProvider(UserService userService,
                                                UserRoleService userRoleService,
-                                               RolePermissionService rolePermissionService) {
+                                               RolePermissionService rolePermissionService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.rolePermissionService = rolePermissionService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        // 获取输入表单
+        // 获取表单输入的用户名、密码
         String username = authentication.getName();
         String rawPassword = (String) authentication.getCredentials();
 

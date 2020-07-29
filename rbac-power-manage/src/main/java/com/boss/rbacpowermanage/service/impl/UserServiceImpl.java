@@ -11,6 +11,7 @@ import com.boss.rbacpowermanage.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -117,7 +118,7 @@ public class UserServiceImpl implements UserService {
 
         // 密码加密
         userDO.setUPassword(this.passwordEncoder.encode(userDO.getPassword()));
-        userDO.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+        userDO.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_admin, admin, menu1"));
         return userDO;
     }
 

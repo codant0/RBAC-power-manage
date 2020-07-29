@@ -1,22 +1,18 @@
 package com.boss.rbacpowermanage.entity.domain;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 /**
  * @Author 黄杰峰
- * @Date 2020/7/27 0027 14:30
+ * @Date 2020/7/28 0028 20:52
  * @Description
  */
 @Data
-public class UserDO implements UserDetails, Serializable {
+public class SecurityDO implements UserDetails {
 
     private Integer uId;
 
@@ -30,25 +26,19 @@ public class UserDO implements UserDetails, Serializable {
 
     private String uEmail;
 
-
-    /**
-     * security存储权限认证用的
-     */
-    private Collection<? extends GrantedAuthority> authorities;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return null;
     }
 
     @Override
     public String getPassword() {
-        return this.uPassword;
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return this.uName;
+        return null;
     }
 
     @Override
@@ -68,6 +58,6 @@ public class UserDO implements UserDetails, Serializable {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 }

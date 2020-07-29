@@ -1,10 +1,13 @@
 package com.boss.rbacpowermanage.controller;
 
+import com.boss.rbacpowermanage.entity.domain.UserDO;
 import com.boss.rbacpowermanage.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Set;
 
@@ -29,10 +32,12 @@ public class UserController {
     }
 
     @GetMapping("/index")
-    public String index(Model model) {
-        Set<Integer> userMenusByUId = userService.findUserMenusByUId(2);
-        model.addAttribute("menus", userMenusByUId);
-        return "index";
+    public ModelAndView index() {
+        ModelAndView mv = new ModelAndView();
+        UserDO user = (UserDO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        mv.setViewName("index");
+        mv.addObject("user", user);
+        return mv;
     }
 
     /**
