@@ -2,6 +2,12 @@
 
 [toc]
 
+## 实现
+
+* RBAC权限划分
+* 使用SpringSecurity实现动态权限控制
+* Thymeleaf及其标签库实现同一页面视图资源控制
+
 
 
 ## RBAC表结构
@@ -108,3 +114,13 @@
 * 模版引擎使用极差
 * 表功能不完善
 * 未结合Nacos、Gateway
+* 乐观锁？
+
+
+
+## 短期规划
+
+* 结合Nacos、Gateway
+* 理清VO、DTO、DO、PO划分，修改Object的使用
+* 添加表字段使其完善
+* 了解乐观锁
