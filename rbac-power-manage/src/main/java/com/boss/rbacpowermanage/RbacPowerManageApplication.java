@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * @author 黄杰峰
+ */
 @SpringBootApplication
 @MapperScan("com.boss.rbacpowermanage.mapper")
 public class RbacPowerManageApplication {

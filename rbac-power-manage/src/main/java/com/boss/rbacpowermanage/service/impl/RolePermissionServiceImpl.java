@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @Author 黄杰峰
  * @Date 2020/7/27 0027 19:42
- * @Description
+ * @Description Role、Permission 二者（都包含）业务实现类
  */
 @Service
 public class RolePermissionServiceImpl implements RolePermissionService {
@@ -44,6 +44,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     @Override
     public boolean deleteRolePermission(Integer rId, Integer pId) {
         Map<String, Object> deleteMap = new HashMap<>();
+        // 删除符合映射的对象
         deleteMap.put("r_id", rId);
         deleteMap.put("p_id", pId);
         return rolePermissionMapper.deleteByMap(deleteMap) >= 1;

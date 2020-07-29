@@ -13,14 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * @Author 黄杰峰
  * @Date 2020/7/27 0027 16:03
- * @Description
+ * @Description 用户相关操作控制器
  */
 @Controller
-//@ResponseBody
 public class UserController {
 
     private final UserService userService;
-
 
     private final UserRoleService userRoleService;
 
@@ -48,7 +46,7 @@ public class UserController {
     public ModelAndView addUserRole(@RequestParam int userId, @RequestParam int roleId) {
 
         ModelAndView mv = new ModelAndView();
-
+        // 若该用户包含该角色，则不添加，否则添加，Model中添加相关信息
         if (userRoleService.hasRole(userId, roleId)) {
             mv.addObject("msg", "已拥有该角色，添加失败");
         } else {
@@ -61,7 +59,7 @@ public class UserController {
     public ModelAndView deleteUserRole(@RequestParam int userId, @RequestParam int roleId) {
 
         ModelAndView mv = new ModelAndView();
-        // 若该用户包含该角色，成功删除，否则不删除
+        // 若该用户包含该角色，成功删除，否则不删除，Model中添加相关信息
         if (userRoleService.hasRole(userId, roleId)) {
             userRoleService.deleteUserRole(userId, roleId);
             mv.addObject("msg", "删除成功");

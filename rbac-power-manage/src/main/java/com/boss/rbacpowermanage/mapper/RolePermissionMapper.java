@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * @Author 黄杰峰
  * @Date 2020/7/27 0027 19:40
- * @Description
+ * @Description 涉及角色和权限（都包含）的Mapper
  */
 @Repository
 public interface RolePermissionMapper extends BaseMapper<RolePermissionPO> {

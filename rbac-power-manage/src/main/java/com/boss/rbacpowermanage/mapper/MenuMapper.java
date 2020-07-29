@@ -6,7 +6,7 @@ import com.boss.rbacpowermanage.entity.po.MenuPO;
 /**
  * @Author 黄杰峰
  * @Date 2020/7/28 0028 9:00
- * @Description
+ * @Description 菜单持久层Mapper
  */
 public interface MenuMapper extends BaseMapper<MenuPO> {
 }

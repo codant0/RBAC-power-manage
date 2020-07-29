@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @Author 黄杰峰
  * @Date 2020/7/27 0027 19:39
- * @Description
+ * @Description 包含User和Role二者的数据库操作接口
  */
 @Repository
 public interface UserRoleMapper extends BaseMapper<UserRolePO> {

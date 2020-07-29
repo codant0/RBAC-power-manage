@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @Author 黄杰峰
  * @Date 2020/7/27 0027 14:41
- * @Description
+ * @Description 角色持久层Mapper
  */
 @Repository
 public interface RoleMapper extends BaseMapper<RolePO> {

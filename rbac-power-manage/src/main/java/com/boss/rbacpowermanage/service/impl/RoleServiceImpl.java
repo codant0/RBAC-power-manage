@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @Author 黄杰峰
  * @Date 2020/7/27 0027 16:02
- * @Description
+ * @Description Role业务实现类
  */
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -46,6 +46,7 @@ public class RoleServiceImpl implements RoleService {
     public List<RoleDTO> findAllRoles() {
         List<RoleDTO> roleDTOList = new ArrayList<>();
         List<RolePO> rolePOList = roleMapper.selectList(null);
+        // PO -> DTO 转换 By BeanUtils
         BeanUtils.copyProperties(rolePOList, roleDTOList);
         return roleDTOList;
     }
