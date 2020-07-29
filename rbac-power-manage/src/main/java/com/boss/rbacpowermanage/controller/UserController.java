@@ -21,9 +21,10 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
+
     private final UserRoleService userRoleService;
 
+    @Autowired
     public UserController(UserService userService, UserRoleService userRoleService) {
         this.userService = userService;
         this.userRoleService = userRoleService;
