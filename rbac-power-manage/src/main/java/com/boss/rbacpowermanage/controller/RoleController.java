@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @Author 黄杰峰
@@ -23,8 +24,30 @@ public class RoleController {
     }
 
     @PostMapping("/addPermission")
-    public String addPermission(@RequestParam int roleId, @RequestParam int permissionId) {
-        rolePermissionService.addRolePermission(roleId, permissionId);
-        return "index";
+    public ModelAndView addPermission(@RequestParam int roleId, @RequestParam int permissionId) {
+
+        ModelAndView mv = new ModelAndView();
+
+        if (rolePermissionService.hasPermission(roleId, permissionId)) {
+            mv.addObject("msg", "该角色已拥有该权限，添加失败");
+        } else {
+            rolePermissionService.addRolePermission(roleId, permissionId);
+            mv.addObject("msg", "添加成功");
+        }
+        mv.setViewName("index");
+        return mv;
+    }
+    
+    public ModelAndView deletePermission(@RequestParam int roleId, @RequestParam int permissionId) {
+        ModelAndView mv = new ModelAndView();
+
+        if (rolePermissionService.hasPermission(roleId, permissionId)) {
+            rolePermissionService.deleteRolePermission(roleId, permissionId);
+            mv.addObject("msg", "删除成功");
+        } else {
+            mv.addObject("msg", "该用户没有该权限，删除失败");
+        }
+        mv.setViewName("index");
+        return mv;
     }
 }
