@@ -109,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //登录表单
                 .formLogin()
                 //登录页面url
-                .loginPage("/login.html")
+                .loginPage("/login")
                 //登录验证url
                 .loginProcessingUrl("/login")
                 //成功登录跳转
@@ -120,6 +120,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(loginFailureHandler)
                 //登录成功后有权限访问所有页面
                 .permitAll()
+            //退出登录
+            .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/logout/success")
+                .deleteCookies("JSESSIONID")
 //            .and()
 //                //设置权限不足handler
 //                .exceptionHandling().accessDeniedHandler(perAccessDeniedHandler)
