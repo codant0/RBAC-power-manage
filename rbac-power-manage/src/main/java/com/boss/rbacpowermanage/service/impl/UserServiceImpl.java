@@ -10,6 +10,8 @@ import com.boss.rbacpowermanage.service.UserRoleService;
 import com.boss.rbacpowermanage.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -111,11 +113,29 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userPO, userDO);
         if (userDO == null) {
             throw new UsernameNotFoundException("不存在该用户!");
+        } else {
+            //设置权限信息
+            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+            List<Integer> userRoleIds = userRoleService.findUserRoleIds(userDO.getUId());
+            Set<Integer> userPermissionIds = new HashSet<>();
+            Set<Integer> userMenuIds;
+
+            for (Integer roleId : userRoleIds) {
+                userPermissionIds.addAll(rolePermissionService.findRolePermissionIds(roleId));
+            }
+
+            // 此处一个权限对应一个菜单资源，后期需要改正
+            userMenuIds = userPermissionIds;
+
+            for (Integer menuId : userMenuIds) {
+                //资源key作为权限标识
+                grantedAuthorities.add(new SimpleGrantedAuthority("menu" + menuId.toString()));
+                userDO.setAuthorities(grantedAuthorities);
+            }
         }
 
         // 密码加密
         userDO.setUPassword(this.passwordEncoder.encode(userDO.getPassword()));
-        System.out.println(userDO);
         return userDO;
     }
 

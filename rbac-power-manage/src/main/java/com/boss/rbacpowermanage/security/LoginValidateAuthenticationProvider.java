@@ -47,7 +47,7 @@ public class LoginValidateAuthenticationProvider implements AuthenticationProvid
         String username = authentication.getName();
         String rawPassword = (String) authentication.getCredentials();
 
-        //查询用户是否存在
+        // 查询用户是否存在
         UserDO user = (UserDO)userService.loadUserByUsername(username);
 
         if (!user.isEnabled()) {
@@ -66,25 +66,6 @@ public class LoginValidateAuthenticationProvider implements AuthenticationProvid
         //验证密码
         if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
             throw new BadCredentialsException("输入密码错误!");
-        }
-
-        //设置权限信息
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        List<Integer> userRoleIds = userRoleService.findUserRoleIds(user.getUId());
-        Set<Integer> userPermissionIds = new HashSet<>();
-        Set<Integer> userMenuIds;
-
-        for (Integer roleId : userRoleIds) {
-            userPermissionIds.addAll(rolePermissionService.findRolePermissionIds(roleId));
-        }
-
-        // 此处一个权限对应一个菜单资源，后期需要改正
-        userMenuIds = userPermissionIds;
-
-        for (Integer menuId : userMenuIds) {
-            //资源key作为权限标识
-            grantedAuthorities.add(new SimpleGrantedAuthority("menu" + menuId.toString()));
-            user.setAuthorities(grantedAuthorities);
         }
 
         return new UsernamePasswordAuthenticationToken(user, rawPassword, user.getAuthorities());

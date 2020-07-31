@@ -23,8 +23,8 @@ import javax.sql.DataSource;
  * @Description Spring Security配置
  **/
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 /**
  * 以下注解配置开启了三个注解，分别是：
  *  @PreAuthorize：方法执行前进行权限检查
@@ -100,16 +100,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //基础设置
         http
-                .httpBasic()
-            .and()
+//                .httpBasic()
+//            .and()
                 .authorizeRequests()
                 //所有请求都需要认证
                 .anyRequest().authenticated()
             .and()
                 //登录表单
                 .formLogin()
-                //登录页面url
-                .loginPage("/login")
+                //登录页面url(登录表单提交地址)
+                .loginPage("/login.html")
                 //登录验证url
                 .loginProcessingUrl("/login")
                 //成功登录跳转
